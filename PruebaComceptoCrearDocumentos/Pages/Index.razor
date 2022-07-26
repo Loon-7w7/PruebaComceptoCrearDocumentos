@@ -1,0 +1,54 @@
+﻿@using PruebaComceptoCrearDocumentos.Modelos
+@using PruebaComceptoCrearDocumentos.Data
+@inject NavigationManager navig
+
+@page "/"
+
+<PageTitle>Generar documento</PageTitle>
+
+<form>
+    <div>
+    <EditForm Model="DatosDocumento">
+
+        <div class="form-group">
+            <label>Nombre del Alumno:</label>
+            <InputText @bind-Value="DatosDocumento.NameAlumno" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Fecha Actual</label>
+            <InputText @bind-Value="DatosDocumento.Fecha" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Nombre Director</label>
+            <InputText @bind-Value="DatosDocumento.NameDirector" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Nombre Tutuor</label>
+            <InputText @bind-Value="DatosDocumento.NameTutor" class="form-control" />
+        </div>
+
+        <input class="btn btn-primary" type="button" value="Generar documento" @onclick="Crear" />
+        
+    </EditForm>
+   
+    
+</div>
+</form>
+
+
+@code{
+    DataDocumente DatosDocumento = new DataDocumente();
+    GenerarDocumento Gen = new GenerarDocumento();
+
+    public string NombreArchivo = null;
+
+    private void Crear()
+    {
+        NombreArchivo = DatosDocumento.NameAlumno;
+        Gen.CreateWordDocument(@"A:\Programas\programas de c#\Creacion de documentos en web\PruebaComceptoCrearDocumentos\PruebaComceptoCrearDocumentos\DiplomaDefinitivo2.docx",
+        @$"A:\Programas\programas de c#\Creacion de documentos en web\PruebaComceptoCrearDocumentos\PruebaComceptoCrearDocumentos\PDF\{NombreArchivo}",DatosDocumento);
+
+        navig.NavigateTo($"/download/{NombreArchivo}.pdf", true);
+
+    }
+}
