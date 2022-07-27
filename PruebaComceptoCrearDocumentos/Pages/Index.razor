@@ -8,23 +8,27 @@
 
 <form>
     <div>
-    <EditForm Model="DatosDocumento">
+    <EditForm Model="contratoElemens">
 
         <div class="form-group">
-            <label>Nombre del Alumno:</label>
-            <InputText @bind-Value="DatosDocumento.NameAlumno" class="form-control" />
+            <label>Espesificar contrato</label>
+            <InputText @bind-Value="contratoElemens.ContratoEpesifico" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Fecha Actual</label>
-            <InputText @bind-Value="DatosDocumento.Fecha" class="form-control" />
+            <label>Nombre del representante de Egod</label>
+            <InputText @bind-Value="contratoElemens.NameEgobRepresentante" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Nombre Director</label>
-            <InputText @bind-Value="DatosDocumento.NameDirector" class="form-control" />
+            <label>Nombre del cliente</label>
+            <InputText @bind-Value="contratoElemens.NameCliente" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Nombre Tutuor</label>
-            <InputText @bind-Value="DatosDocumento.NameTutor" class="form-control" />
+            <label>Nombre del Reprecentante del cliente</label>
+            <InputText @bind-Value="contratoElemens.NameClienteRepresentante" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Puesto del Reprecentante del cliente</label>
+            <InputText @bind-Value="contratoElemens.PuestoRepresentanteCliente" class="form-control" />
         </div>
 
         <input class="btn btn-primary" type="button" value="Generar documento" @onclick="Crear" />
@@ -37,16 +41,17 @@
 
 
 @code{
-    DataDocumente DatosDocumento = new DataDocumente();
+
+    ContratoElemens contratoElemens = new ContratoElemens();
     GenerarDocumento Gen = new GenerarDocumento();
 
     public string NombreArchivo = null;
 
     private void Crear()
     {
-        NombreArchivo = DatosDocumento.NameAlumno;
-        Gen.CreateWordDocument(@"A:\Programas\programas de c#\Creacion de documentos en web\PruebaComceptoCrearDocumentos\PruebaComceptoCrearDocumentos\DiplomaDefinitivo2.docx",
-        @$"A:\Programas\programas de c#\Creacion de documentos en web\PruebaComceptoCrearDocumentos\PruebaComceptoCrearDocumentos\PDF\{NombreArchivo}",DatosDocumento);
+        NombreArchivo = contratoElemens.NameCliente;
+        Gen.CreateWordDocument(@"A:\Programas\programas de c#\Creacion de documentos en web\PruebaComceptoCrearDocumentos\PruebaComceptoCrearDocumentos\ContratoSivu-Plantilla.docx",
+        @$"A:\Programas\programas de c#\Creacion de documentos en web\PruebaComceptoCrearDocumentos\PruebaComceptoCrearDocumentos\PDF\{NombreArchivo}",contratoElemens);
 
         navig.NavigateTo($"/download/{NombreArchivo}.pdf", true);
 

@@ -54,7 +54,7 @@ namespace PruebaComceptoCrearDocumentos.Data
                                              ref matchControl);
 
         }
-        public void CreateWordDocument(object filename, object SaveAs, DataDocumente DatosDocumento)
+        public void CreateWordDocument(object filename, object SaveAs, ContratoElemens contratoElemens)
         {
             Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
             object missing = Missing.Value;
@@ -78,10 +78,10 @@ namespace PruebaComceptoCrearDocumentos.Data
                 myWordDoc.Activate();
 
 
-                this.cambiarContenido(myWordDoc, "NameStuden", DatosDocumento.NameAlumno);
-                this.cambiarContenido(myWordDoc, "TextDatatime", DatosDocumento.Fecha);
-                this.cambiarContenido(myWordDoc, "nameDirector", DatosDocumento.NameDirector);
-                this.cambiarContenido(myWordDoc, "NameTutor", DatosDocumento.NameTutor);
+                this.cambiarContenido(myWordDoc, "ContratoEpesifico", contratoElemens.ContratoEpesifico.ToUpper());
+                this.cambiarContenido(myWordDoc, "NameEgobRepresentante", contratoElemens.NameEgobRepresentante.ToUpper());
+                this.cambiarContenido(myWordDoc, "NameClienteRepresentante", contratoElemens.NameClienteRepresentante.ToUpper());
+                this.cambiarContenido(myWordDoc, "PuestoRepresentanteCliente", contratoElemens.PuestoRepresentanteCliente.ToUpper());
 
                 myWordDoc.ExportAsFixedFormat(SaveAs.ToString(), FormatoExportado);
 
